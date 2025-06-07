@@ -88,16 +88,81 @@
 
 ```
 eat-what/
-├── backend/              # 后端服务
-│   ├── app/             # 应用代码
-│   ├── tests/           # 测试用例
-│   └── alembic/         # 数据库迁移
-├── frontend/            # 前端应用
-│   ├── mobile/         # React Native移动应用
-│   └── web/           # React Web应用
-├── docs/               # 项目文档
-└── scripts/            # 工具脚本
+├── frontend/                # 前端应用
+│   ├── mobile/             # React Native移动应用
+│   │   ├── src/           # 源代码
+│   │   ├── assets/        # 静态资源
+│   │   └── tests/         # 测试用例
+│   └── web/               # React Web应用
+│       ├── src/           # 源代码
+│       ├── public/        # 公共资源
+│       └── tests/         # 测试用例
+│
+├── backend/                # 后端服务
+│   ├── src/               # 源代码
+│   │   ├── api/          # API接口定义
+│   │   ├── core/         # 核心业务逻辑
+│   │   ├── models/       # 数据模型
+│   │   ├── services/     # 服务层
+│   │   └── utils/        # 工具函数
+│   ├── tests/            # 测试用例
+│   └── alembic/          # 数据库迁移
+│
+├── services/              # 微服务
+│   ├── pocketbase/       # PocketBase服务
+│   ├── ml/               # 机器学习服务
+│   └── api/              # API网关服务
+│
+├── pb_data/              # PocketBase数据
+├── pb_migrations/        # PocketBase迁移
+│
+├── docs/                 # 项目文档
+│   ├── technical-design.md  # 技术设计文档
+│   └── user-flow.md        # 用户流程文档
+│
+└── scripts/             # 工具脚本
+    ├── deploy/         # 部署脚本
+    └── dev/            # 开发辅助脚本
 ```
+
+### 目录说明
+
+#### 前端 (frontend/)
+- `mobile/`: React Native移动应用
+  - `src/`: 源代码，包含组件、页面、状态管理等
+  - `assets/`: 图片、字体等静态资源
+  - `tests/`: 单元测试和集成测试
+- `web/`: React Web应用
+  - `src/`: 源代码
+  - `public/`: 静态资源
+  - `tests/`: 测试用例
+
+#### 后端 (backend/)
+- `src/`: 源代码目录
+  - `api/`: RESTful API接口定义
+  - `core/`: 核心业务逻辑实现
+  - `models/`: 数据模型定义
+  - `services/`: 服务层实现
+  - `utils/`: 通用工具函数
+- `tests/`: 测试用例
+- `alembic/`: 数据库迁移文件
+
+#### 微服务 (services/)
+- `pocketbase/`: PocketBase服务，负责数据存储和基础认证
+- `ml/`: 机器学习服务，提供智能推荐功能
+- `api/`: API网关服务，统一管理API路由和认证
+
+#### 数据存储
+- `pb_data/`: PocketBase数据存储
+- `pb_migrations/`: PocketBase数据迁移文件
+
+#### 文档 (docs/)
+- `technical-design.md`: 系统架构和技术设计文档
+- `user-flow.md`: 用户流程和功能说明文档
+
+#### 脚本 (scripts/)
+- `deploy/`: 部署相关脚本
+- `dev/`: 开发环境配置脚本
 
 ## 开发指南
 
