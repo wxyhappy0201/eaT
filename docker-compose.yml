@@ -3,18 +3,15 @@ version: '3.8'
 services:
   pocketbase:
     image: ghcr.io/muchobien/pocketbase:latest
-    container_name: eat-what-pocketbase
-    restart: unless-stopped
     ports:
-      - "8090:8090"
+      - '8090:8090'
     volumes:
-      - ./pb_data:/pb_data
-      - ./pb_migrations:/pb_migrations
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - ./pb:/pb
+    restart: unless-stopped
+    entrypoint: sh -c '/usr/local/bin/pocketbase superuser upsert $PB_SUPERUSER_EMAIL $PB_SUPERUSER_PASSWORD --dev --dir=/pb/pb_data && /usr/local/bin/pocketbase serve --dev --http=0.0.0.0:8090 --dir=/pb/pb_data --publicDir=/pb_public --hooksDir=/pb_hooks --migrationsDir=/pb/pb_migrations'
+    environment:
+      - PB_SUPERUSER_EMAIL=${PB_SUPERUSER_EMAIL}
+      - PB_SUPERUSER_PASSWORD=${PB_SUPERUSER_PASSWORD}
 
   redis:
     image: redis:7-alpine
@@ -24,11 +21,10 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: redis-server --appendonly yes
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
-      timeout: 3s
+      timeout: 5s
       retries: 5
 
 volumes:
